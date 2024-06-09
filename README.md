@@ -6,9 +6,10 @@
   <p align="center"> ...ensuring you meet task's deadlines for improved productivity</p>
 
 ### Introduction
-[Taskydo](https://taskydo.onrender.com) Taskydo is a leading to-do application that provides you with a seamless service to properly manage your tasks for productivity.
-Staying organised is very key to meeting up with targets and being efficient in fixing and getting things done.Therefore, Taskydo has been carefully engineered to feature relevant and top notch micro services that put you on top of your tasks. A relational databse is used as data storage to enhance future growth (scalability).
-This application is the answer to a cluttered set of activities that leads to missing deadlines. The endpoints with examples can be accessed from [Here](https://taskydo.onrender.com)
+  [Taskydo](https://taskydo.onrender.com) Taskydo is a leading to-do application that provides you with a seamless service to properly manage your tasks for productivity.
+  Staying organised is very key to meeting up with targets and being efficient in fixing and getting things done.Therefore, Taskydo has been carefully engineered to feature   relevant and top notch micro services that put you on top of your tasks. A relational databse is used as data storage to enhance future growth (scalability).
+  This application is the answer to a cluttered set of activities that leads to missing deadlines. The endpoints with examples can be accessed from 
+  [Here](https://taskydo.onrender.com)
 
 ### Getting started (signing up):
 1. You need to enter a userName, password and a unique email as a JSON object to open an account with Taskydo .
