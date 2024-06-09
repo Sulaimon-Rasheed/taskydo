@@ -39,15 +39,15 @@ When a task or tasks are retrieved , the response object for each task contains 
 1. The response object of every retrieved task contains the field that stores the endpoint to delete the retrieved task. 
 2. The endpoint to delete a task can be found in the response object of retreived task with an attached <b style="font-weight:bold">id<b> as a path parameter.
 
-### Key Notes:
+#### Key Notes:
 - It is advisable you later delete completed tasks to free the memory.
 - All responses are JSON objects.
 - When done, ensure you Logout from the system for security reasons.
 - Excessive or too many requests to the API is prevented with a rate limiting tool.
 - The endpoints with examples can be accessed from [Here](https://taskydo.onrender.com)
 
-### Stay in touch
+#### Stay in touch
 - Author - [Sulaimon Rasheed](https://dev-sulaimon.onrender.com)
 
-### License
-Taskydo is [MIT licensed](LICENSE).
+#### License
+- Taskydo is [MIT licensed](LICENSE).
