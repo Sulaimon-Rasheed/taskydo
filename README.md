@@ -1,73 +1,57 @@
+## Taskydo
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+  <img src="https://github.com/Sulaimon-Rasheed/taskydo/blob/main/src/public/apple-touch-icon.png" width="80" height="80"/>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+  <p align="center"> ...ensuring you meet task's deadlines for improved productivity</p>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Introduction
+[Taskydo](https://taskydo.onrender.com) Taskydo is a leading to-do application that provides you with a seamless service to properly manage your tasks for productivity.
+Staying organised is very key to meeting up with targets and being efficient in fixing and getting things done.Therefore, Taskydo has been carefully engineered to feature relevant and top notch micro services that put you on top of your tasks. A relational databse is used as data storage to enhance future growth (scalability).
+This application is the answer to a cluttered set of activities that leads to missing deadlines. The endpoints with examples can be accessed from [Here](https://taskydo.onrender.com)
 
-## Description
+### Getting started (signing up):
+1. You need to enter a userName, password and a unique email as a JSON object to open an account with Taskydo .
+2. Your password should not be less than 8 characters.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Authentication and Authorization
+1. After signining up,users must login to make all the task related requests.e.g task creation, task updating, task filtering e.t.c. This is because the system authenticate and authorize users before a request is allowed.
+2. A Jwt token is generated when a user Login. The token stores encrypted details of the user in the client's cookie storage to authenticate and authorize the user when making request to the API. The Jwt token expires after 2hrs. Meaning, users will be authomatically logged out after 2hrs for security reasons.
+3. To login, use the correct email and password as used when signing up. Else, you will get an error message.
 
-## Installation
+### Creating a task
+1. To create a task (i.e your to-do), user need to enter the title, description and a due_date as a JSON object.
+2. The due_date must be in the format yyyy-mm-ddTHH:MM:ssZ e.g 2024-08-10T14:30:00Z (i.e 10th August, 2024 at 2:30PM)
+3. Every task is created with a default status , "Pending"
 
-```bash
-$ npm install
-```
+### Retreiving task/tasks:
+When a task or tasks are retrieved , the response object for each task contains a unique URL to update its status as "Completed" or "Pending" depending on the current status and also contains a unique URL to also delete the task if desired.Retrieved tasks or filtered tasks are paginated. So you can view the next page by adding the query parameter ?page= . E.g ?page=2
 
-## Running the app
+### Filtering tasks:
+1. Completed tasks can be filtered out by adding the query parameter, ?status=Completed to the filtering endpoint .
+2. Pending tasks can also be filtered out by adding the query parameter, ?status=Pending to the filtering endpoint .
 
-```bash
-# development
-$ npm run start
+### Updating a task:
+1. The title, description and a due_date of tasks can be updated. The update should be sent as JSON object just like when creating a task.
+2. The endpoint to update a task can be found in the response object of retreived task with an attached <b style="font-weight:bold">id<b> as a path parameter.
 
-# watch mode
-$ npm run start:dev
+### Deleting a task:
+1. The response object of every retrieved task contains the field that stores the endpoint to delete the retrieved task. 
+2. The endpoint to delete a task can be found in the response object of retreived task with an attached <b style="font-weight:bold">id<b> as a path parameter.
 
-# production mode
-$ npm run start:prod
-```
+### Key Notes:
+- It is advisable you later delete completed tasks to free the memory.
+- All responses are JSON objects.
+- When done, ensure you Logout from the system for security reasons.
+- Excessive or too many requests to the API is prevented with a rate limiting tool.
+- The endpoints with examples can be accessed from [Here](https://taskydo.onrender.com)
 
-## Test
+### Stay in touch
 
-```bash
-# unit tests
-$ npm run test
+- Author - [Sulaimon Rasheed](https://dev-sulaimon.onrender.com)
+- Website - [ https://taskydo.onrender.com
+]( https://taskydo.onrender.com)
 
-# e2e tests
-$ npm run test:e2e
+### License
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Taskydo is [MIT licensed](LICENSE).
