@@ -83,7 +83,7 @@ export class TaskService {
       }
 
       let ArrayOfTasks = [];
-      let currUrl = 'http://localhost:7500/v1';
+      let currUrl = 'https://taskydo-1.onrender.com/v1';
       let neededInfo;
       for (const task of tasks) {
         if (task.status === 'Pending') {
@@ -157,7 +157,7 @@ export class TaskService {
       const userId = res.locals.user.id;
       const taskId = id;
       let neededInfo;
-      let currUrl = 'http://localhost:7500/v1';
+      let currUrl = 'https://taskydo-1.onrender.com/v1';
 
       const task = await this.taskModel.findOne({
         where: { _id: taskId, user_id: userId },
@@ -332,7 +332,7 @@ export class TaskService {
       let offset = (page - 1) * limit;
 
       let ArrayOfTasks = [];
-      let currUrl = 'http://localhost:7500/v1';
+      let currUrl = 'https://taskydo-1.onrender.com/v1';
       let neededInfo;
       let totalPages;
 
@@ -412,7 +412,6 @@ export class TaskService {
         });
       }
     } catch (err) {
-      // throw new ForbiddenException('Jwt is required');
       return res.status(500).json({
         statusCode: 500,
         message: err.message,
