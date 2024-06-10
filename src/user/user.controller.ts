@@ -40,7 +40,7 @@ export class UserController {
 
   //======================= ENDPOINT FOR LOGGING OUT USER ======================
   @Post('/logout')
-  async logOut(@Req() req: Request, @Res() res: Response) {
-    await this.userService.logOut(req, res);
+  async logOut(@Res() res: Response) {
+    await this.userService.logOut(res);
   }
 }

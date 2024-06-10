@@ -42,8 +42,6 @@ export class TaskService {
         await user.save();
       }
 
-      console.log(user.taskIds);
-
       return res.status(201).json({
         statusCode: 201,
         message: 'Task created successfully',

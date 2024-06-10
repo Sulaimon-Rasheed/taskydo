@@ -29,7 +29,10 @@ export class UserService {
         },
       });
       if (existingUser) {
-        throw new ConflictException('User already exist');
+        return res.status(409).json({
+          statusCode: 409,
+          message:"User already exist"
+        });
       }
 
       const hashedPassword = await encrypting.encryptString(
@@ -102,7 +105,7 @@ export class UserService {
   }
 
   //======================= SERVICE FOR LOGGING OUT USER ======================
-  async logOut(req: Request, res: Response): Promise<Object> {
+  async logOut(res: Response): Promise<Object> {
     try {
       res.clearCookie('jwt');
       return res.status(200).json({
