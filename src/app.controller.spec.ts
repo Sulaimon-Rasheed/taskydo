@@ -31,7 +31,7 @@ describe('AppController', () => {
       expect(res.json).toHaveBeenCalledWith({
         statusCode:200,
         message:"Welcome to Taskydo. ...a leading to-do application that provides you with a seamless service to record and manage your daily tasks for productivity.",
-        Instruction:`Read the documentation on https://taskydo.onrender.com/v1 for a better experience making request to the application`
+        Instruction:`Read the documentation on https://documenter.getpostman.com/view/28974381/2sA3XLEj2Q for a better experience making request to the application`
       });
     });
   });
