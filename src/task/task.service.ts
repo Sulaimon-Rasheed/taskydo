@@ -88,6 +88,7 @@ export class TaskService {
       for (const task of tasks) {
         if (task.status === 'Pending') {
           neededInfo = {
+            id:task._id,
             title: task.title,
             description: task.description,
             created_time: task.createdAt,
@@ -98,6 +99,7 @@ export class TaskService {
           };
         } else {
           neededInfo = {
+            id:task._id,
             title: task.title,
             description: task.description,
             created_time: task.createdAt,
@@ -172,6 +174,7 @@ export class TaskService {
 
       if (task.status === 'Pending') {
         neededInfo = {
+          id:task._id,
           title: task.title,
           description: task.description,
           created_time: task.createdAt,
@@ -182,6 +185,7 @@ export class TaskService {
         };
       } else {
         neededInfo = {
+          id:task._id,
           title: task.title,
           description: task.description,
           created_time: task.createdAt,
@@ -362,6 +366,7 @@ export class TaskService {
       for (const task of tasks) {
         if (status === 'Pending') {
           neededInfo = {
+            id:task._id,
             title: task.title,
             description: task.description,
             created_time: task.createdAt,
@@ -372,6 +377,7 @@ export class TaskService {
           };
         } else if (status === 'Completed') {
           neededInfo = {
+            id:task._id,
             title: task.title,
             description: task.description,
             created_time: task.createdAt,
