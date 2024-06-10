@@ -6,10 +6,9 @@
   <p align="center"> ...ensuring you meet task's deadlines for improved productivity</p>
 
 ### Introduction
-  [Taskydo](https://taskydo.onrender.com) Taskydo is a leading to-do application that provides you with a seamless service to properly manage your tasks for productivity.
+  [Taskydo](https://documenter.getpostman.com/view/28974381/2sA3XLEj2Q) is a leading to-do application that provides you with a seamless service to properly manage your tasks for productivity.
   Staying organised is very key to meeting up with targets and being efficient in fixing and getting things done.Therefore, Taskydo has been carefully engineered to feature   relevant and top notch micro services that put you on top of your tasks. A relational databse is used as data storage to enhance future growth (scalability).
-  This application is the answer to a cluttered set of activities that leads to missing deadlines. The endpoints with examples can be accessed from 
-  [Here](https://taskydo.onrender.com)
+  This application is the answer to a cluttered set of activities that leads to missing deadlines.Read the documentation [Here](https://documenter.getpostman.com/view/28974381/2sA3XLEj2Q) for every request and response details.
 
 ### Getting started (signing up):
 1. You need to enter a userName, password and a unique email as a JSON object to open an account with Taskydo .
@@ -22,8 +21,8 @@
 
 ### Creating a task
 1. To create a task (i.e your to-do), user need to enter the title, description and a due_date as a JSON object.
-2. The due_date must be in the format yyyy-mm-ddTHH:MM:ssZ e.g 2024-08-10T14:30:00Z (i.e 10th August, 2024 at 2:30PM)
-3. Every task is created with a default status , "Pending"
+2. The due_date should be in the format yyyy-mm-ddTHH:MM:ssZ e.g 2024-08-10T14:30:00Z (i.e 10th August, 2024 at 2:30PM)
+3. Every task is created with a default status , "Pending" (i.e Not yet done or completed)
 
 ### Retreiving task/tasks:
 When a task or tasks are retrieved , the response object for each task contains a unique URL to update its status as "Completed" or "Pending" depending on the current status and also contains a unique URL to also delete the task if desired.Retrieved tasks or filtered tasks are paginated. So you can view the next page by adding the query parameter ?page= . E.g ?page=2
@@ -45,7 +44,7 @@ When a task or tasks are retrieved , the response object for each task contains 
 - All responses are JSON objects.
 - When done, ensure you Logout from the system for security reasons.
 - Excessive or too many requests to the API is prevented with a rate limiting tool.
-- The endpoints with examples can be accessed from [Here](https://taskydo.onrender.com)
+- Read the documentation [Here](https://documenter.getpostman.com/view/28974381/2sA3XLEj2Q) for every request and response details.
 
 #### Stay in touch
 - Author - [Sulaimon Rasheed](https://dev-sulaimon.onrender.com)
