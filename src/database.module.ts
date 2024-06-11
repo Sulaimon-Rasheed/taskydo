@@ -25,7 +25,7 @@ import { Task } from './models/task.model';
     }),
     SequelizeModule.forFeature([User, Task]),
   ],
-  
+  exports: [SequelizeModule],
 })
 export class DatabaseModule {}
 

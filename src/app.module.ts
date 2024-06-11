@@ -10,13 +10,19 @@ import { TaskModule } from './task/task.module';
 import { AuthenticationService } from './authentication/authentication.service';
 import { CacheService } from './cache/cache.service';
 import { WinstonLoggerService } from './logger/logger.service';
+import { CronModule } from './cron/cron.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CronService } from './cron/cron.service';
+import { TaskService } from './task/task.service';
 
 @Module({
   imports: [
     DatabaseModule,
-    ThrottlerModule.forRoot([{ ttl: 60 * 1000, limit: 3 }]),
+    ThrottlerModule.forRoot([{ ttl: 60 * 1000, limit: 10 }]),
     UserModule,
     TaskModule,
+    CronModule,
+    ScheduleModule.forRoot()
   ],
   controllers: [AppController],
   providers: [
@@ -27,7 +33,9 @@ import { WinstonLoggerService } from './logger/logger.service';
     },
     AuthenticationService,
     CacheService,
-    WinstonLoggerService
+    WinstonLoggerService,
+    CronService,
+    TaskService
   ],
 })
 export class AppModule {}
