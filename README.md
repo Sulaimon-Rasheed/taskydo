@@ -48,6 +48,4 @@ When a task or tasks are retrieved , the response object for each task contains 
 - Read the full documentation [Here](https://taskydo.onrender.com) to get the endpoints details.
 
 #### Stay in touch
-- Author - [Sulaimon Rasheed](https://dev-sulaimon.onrender.com)
-
-- Taskydo is [MIT licensed](LICENSE).
+- Author - [Sulaimon Rasheed](https://dev-sulaimon.onrender.com/About)
