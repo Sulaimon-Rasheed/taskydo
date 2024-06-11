@@ -88,7 +88,7 @@ export class UserService {
 
       if (!valid) {
         this.loggerService.log('email or password is incorrect.');
-        return res.json({
+        return res.status(401).json({
           statusCode: 401,
           message: `Opps!! email or password is incorrect.`,
         });
