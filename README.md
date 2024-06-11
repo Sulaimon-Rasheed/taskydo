@@ -8,7 +8,10 @@
 ### Introduction
 [Taskydo](https://taskydo.onrender.com) Taskydo is a leading to-do application that provides you with a seamless service to properly manage your tasks for productivity.
 Staying organised is very key to meeting up with targets and being efficient in fixing and getting things done.Therefore, Taskydo has been carefully engineered to feature top notch micro services and tools for you to have the best experience which consequentlly put you on top of your tasks E.g Optimization and security features. A relational databse is used as data storage to enhance future growth (scalability).
-This application is the answer to a cluttered set of activities that leads to missing deadlines. Read the full documentation [Here](https://taskydo.onrender.com)
+
+Among other features are an optimization system such as catching, security techniques such as authentication and rate limiting and also is an email notification system that sends you a reminder through your registered email address just about an hour to the due time of a created task. A relational database is used as data storage to enhance future growth.
+
+Taskydo is indeed the answer to a cluttered set of activities that leads to missing deadlines. Read the full documentation [Here](https://taskydo.onrender.com)
 to get the endpoints details.
   
 ### Getting started (signing up):
