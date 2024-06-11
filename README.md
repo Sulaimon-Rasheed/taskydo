@@ -22,7 +22,6 @@ to get the endpoints details.
 
 ### Creating a task
 1. To create a task (i.e your to-do), user need to enter the title, description and a due_date as a JSON object.
-<<<<<<< HEAD
 2. The due_date must be in the format yyyy-mm-ddTHH:MM:ssZ e.g 2024-08-10T14:30:00Z (i.e 10th August, 2024 at 2:30PM)
 3. Every task is created with a default status , "Pending"
 
