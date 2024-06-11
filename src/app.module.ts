@@ -8,6 +8,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { UserModule } from './user/user.module';
 import { TaskModule } from './task/task.module';
 import { AuthenticationService } from './authentication/authentication.service';
+import { CacheService } from './cache/cache.service';
+import { WinstonLoggerService } from './logger/logger.service';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { AuthenticationService } from './authentication/authentication.service';
       useClass: GlobalExceptionFilter,
     },
     AuthenticationService,
+    CacheService,
+    WinstonLoggerService
   ],
 })
 export class AppModule {}
