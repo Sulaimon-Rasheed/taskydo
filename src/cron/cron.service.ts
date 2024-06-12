@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from 'src/models/user.model';
 import { DateTime } from 'luxon';
 import { WinstonLoggerService } from 'src/logger/logger.service';
-import { Cron} from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 
 @Injectable()
 export class CronService {
@@ -14,7 +14,6 @@ export class CronService {
     private readonly loggerService: WinstonLoggerService,
   ) {}
 
-  
   @Cron('*/30 * * * *')
   async handleCron() {
     this.loggerService.log('Cron job running...');
@@ -31,7 +30,10 @@ export class CronService {
     const current_time = DateTime.now();
 
     for (const task of tasks) {
-      let formatedDueDate = DateTime.fromFormat(task.due_date, 'LLL d, yyyy \'at\' HH:mm' )
+      let formatedDueDate = DateTime.fromFormat(
+        task.due_date,
+        "LLL d, yyyy 'at' HH:mm",
+      );
       const option = {
         email: task.user.email,
         subject: 'Reminder from Taskydo',

@@ -86,7 +86,6 @@ export class TaskService {
       }
 
       if (!ArrayOfTasks) {
-        console.log('cache miss');
         const { rows: tasks, count: Alltasks } =
           await this.taskModel.findAndCountAll({
             where: { user_id: id },
@@ -137,7 +136,7 @@ export class TaskService {
         let totalPages = Math.ceil(Alltasks / limit);
 
         if (page == 1) {
-          this.cacheService.set(`tasks-${id}`, ArrayOfTasks, 60 * 60 * 1000);
+          this.cacheService.set(`tasks-${id}`, ArrayOfTasks, 2 * 60 * 1000);
           this.cacheService.set(`allTasks-${id}`, Alltasks, 2 * 60 * 1000);
         }
 

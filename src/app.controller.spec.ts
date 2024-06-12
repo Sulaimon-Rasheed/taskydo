@@ -1,38 +1,58 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { Request, Response } from 'express';
+import { Request, Response} from 'express';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { Reflector } from '@nestjs/core';
+import * as request from 'supertest';
 
 describe('AppController', () => {
   let appController: AppController;
   let appService: AppService;
 
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
-    }).compile();
+  const mockRequest = {} as Request;
+  const mockResponse = {
+    json: jest.fn().mockReturnThis(),
+    status: jest.fn().mockReturnThis(),
+  } as unknown as Response;
 
-    appController = app.get<AppController>(AppController);
-    appService = app.get<AppService>(AppService);
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        ThrottlerModule.forRoot([{
+          ttl: 60,
+          limit: 10,
+        }]),
+      ],
+      controllers: [AppController],
+      providers: [
+        {
+          provide: AppService,
+          useValue: { getHome: jest.fn().mockReturnValue({ message: 'Welcome Home' }) },
+        },
+        Reflector,
+      ],
+    })
+      .overrideGuard(ThrottlerGuard)
+      .useValue({
+        canActivate: () => true,
+      })
+      .compile();
+
+    appController = module.get<AppController>(AppController);
+    appService = module.get<AppService>(AppService);
   });
 
-  describe('root', () => {
-    it('should return "home page with welcome message"', () => {
-      const req: Partial<Request> = {};
-      const res: Partial<Response> = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn().mockReturnThis(),
-      }; 
+  it('should be defined', () => {
+    expect(appController).toBeDefined();
+  });
 
-      appController.getHome(req as Request, res as Response);
+  it('should return expected result from getHome', () => {
+    appController.getHome(mockRequest, mockResponse);
 
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({
-        statusCode:200,
-        message:"Welcome to Taskydo. ...a leading to-do application that provides you with a seamless service to record and manage your daily tasks for productivity.",
-        Instruction:`Read the documentation on https://documenter.getpostman.com/view/28974381/2sA3XLEj2Q for a better experience making request to the application`
-      });
-    });
+    expect(appService.getHome).toHaveBeenCalledWith(mockRequest, mockResponse);
+    expect(mockResponse.status).toHaveBeenCalledWith(200);
+    expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Welcome Home' });
   });
 });
