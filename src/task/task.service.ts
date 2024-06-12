@@ -136,8 +136,8 @@ export class TaskService {
         let totalPages = Math.ceil(Alltasks / limit);
 
         if (page == 1) {
-          this.cacheService.set(`tasks-${id}`, ArrayOfTasks, 2 * 60 * 1000);
-          this.cacheService.set(`allTasks-${id}`, Alltasks, 2 * 60 * 1000);
+          this.cacheService.set(`tasks-${id}`, ArrayOfTasks, 60 * 60 * 1000);
+          this.cacheService.set(`allTasks-${id}`, Alltasks, 60 * 60 * 1000);
         }
 
         this.loggerService.log('Retrieving all tasks completed');
