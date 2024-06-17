@@ -31,11 +31,6 @@ import { TaskService } from './task/task.service';
       provide: APP_FILTER,
       useClass: GlobalExceptionFilter,
     },
-    AuthenticationService,
-    CacheService,
-    WinstonLoggerService,
-    CronService,
-    TaskService
   ],
 })
 export class AppModule {}

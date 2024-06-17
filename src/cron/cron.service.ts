@@ -50,7 +50,6 @@ export class CronService {
 
       const time_diff = Math.round(due_time.diff(current_time, 'hours').hours);
 
-      console.log(time_diff);
       if (time_diff === 1) {
         mailService.sendEmail(option);
       }

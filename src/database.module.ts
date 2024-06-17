@@ -8,9 +8,6 @@ import { Task } from './models/task.model';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
     SequelizeModule.forRoot({
       dialect:process.env.DB_DIALECT as any,
       host: process.env.DB_HOST,
