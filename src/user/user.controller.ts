@@ -20,27 +20,27 @@ export class UserController {
 
   //======================= ENDPOINT FOR CREATING A USER ======================
   @Post('/signup')
-  async createUser(
+  createUser(
     @Body(new ValidationPipe()) createUserDto: CreateUserDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    await this.userService.createUser(createUserDto, req, res);
+    this.userService.createUser(createUserDto, req, res);
   }
 
   //======================= ENDPOINT FOR LOGGING IN USER ======================
   @Post('/login')
-  async login(
+  login(
     @Body(new ValidationPipe()) loginUserDto: LoginUserDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    await this.userService.loginUser(loginUserDto, req, res);
+    this.userService.loginUser(loginUserDto, req, res);
   }
 
   //======================= ENDPOINT FOR LOGGING OUT USER ======================
   @Post('/logout')
-  async logOut(@Res() res: Response) {
-    await this.userService.logOut(res);
+  logOut(@Res() res: Response) {
+  this.userService.logOut(res);
   }
 }

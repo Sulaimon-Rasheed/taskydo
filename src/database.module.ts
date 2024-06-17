@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ConfigModule } from '@nestjs/config';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { User } from './models/user.model';
@@ -20,9 +19,7 @@ import { Task } from './models/task.model';
       models: [User, Task],
       logging: console.log, 
     }),
-    SequelizeModule.forFeature([User, Task]),
-  ],
-  exports: [SequelizeModule],
+  ]
 })
 export class DatabaseModule {}
 

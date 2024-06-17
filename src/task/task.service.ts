@@ -8,6 +8,7 @@ import { User } from 'src/models/user.model';
 import { Request, Response } from 'express';
 import { CacheService } from 'src/cache/cache.service';
 import { WinstonLoggerService } from 'src/logger/logger.service';
+import { DateTime } from 'luxon';
 
 @Injectable()
 export class TaskService {
@@ -106,13 +107,18 @@ export class TaskService {
         let currUrl = 'https://taskydo-1.onrender.com/v1';
         let neededInfo;
         for (const task of tasks) {
+          
+          let formatedDueDate = DateTime.fromISO(task.due_date).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+          let formatedCreatedDate = DateTime.fromJSDate(task.createdAt).toFormat("LLL d, yyyy 'at' HH:mm")
+          
           if (task.status === 'Pending') {
             neededInfo = {
               id: task._id,
               title: task.title,
               description: task.description,
-              created_time: task.createdAt,
-              due_date: task.due_date,
+              created_time: formatedCreatedDate,
+              due_date:formatedDueDate,
               status: task.status,
               update_task_to_completed: `${currUrl}/task/markTaskCompleted/${task._id}`,
               delete_task: `${currUrl}/task/deleteOneTask/${task._id}`,
@@ -122,8 +128,8 @@ export class TaskService {
               id: task._id,
               title: task.title,
               description: task.description,
-              created_time: task.createdAt,
-              due_date: task.due_date,
+              created_time: formatedCreatedDate,
+              due_date:formatedDueDate,
               status: task.status,
               return_task_to_pending: `${currUrl}/task/markTaskPending/${task._id}`,
               delete_task: `${currUrl}/task/deleteOneTask/${task._id}`,
@@ -232,14 +238,17 @@ export class TaskService {
           message: 'Task not found',
         });
       }
-
+      let formatedDueDate = DateTime.fromISO(task.due_date).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+      let formatedCreatedDate = DateTime.fromJSDate(task.createdAt).toFormat("LLL d, yyyy 'at' HH:mm")
+      
       if (task.status === 'Pending') {
         neededInfo = {
           id: task._id,
           title: task.title,
           description: task.description,
-          created_time: task.createdAt,
-          due_date: task.due_date,
+          created_time:formatedCreatedDate,
+          due_date:formatedDueDate,
           status: task.status,
           update_task_to_completed: `${currUrl}/task/markTaskCompleted/${task._id}`,
           delete_task: `${currUrl}/task/deleteOneTask/${task._id}`,
@@ -249,8 +258,8 @@ export class TaskService {
           id: task._id,
           title: task.title,
           description: task.description,
-          created_time: task.createdAt,
-          due_date: task.due_date,
+          created_time:formatedCreatedDate,
+          due_date:formatedDueDate,
           status: task.status,
           return_task_to_pending: `${currUrl}/task/markTaskPending/${task._id}`,
           delete_task: `${currUrl}/task/deleteOneTask/${task._id}`,
@@ -302,12 +311,25 @@ export class TaskService {
 
       this.cacheService.del(`tasks-${userId}`);
 
-      this.loggerService.log('Task update successful');
+      this.loggerService.log('Successful task update');
 
+      let formatedDueDate = DateTime.fromISO(theTask.due_date).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+      let formatedCreatedDate = DateTime.fromJSDate(theTask.createdAt).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+      const neededInfo = {
+        id:theTask._id,
+        title:theTask.title,
+        description:theTask.description,
+        created_time:formatedCreatedDate,
+        due_date:formatedDueDate,
+        status:theTask.status,
+      };
+      
       return res.status(200).json({
         statusCode: 200,
         message: 'Task updated successfully',
-        result: theTask,
+        result:neededInfo
       });
     } catch (err) {
       this.loggerService.error('Something broke', err.stack);
@@ -349,10 +371,23 @@ export class TaskService {
 
       this.loggerService.log('Marking task status as `Completed` done');
 
+      let formatedDueDate = DateTime.fromISO(theTask.due_date).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+      let formatedCreatedDate = DateTime.fromJSDate(theTask.createdAt).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+      const neededInfo = {
+        id:theTask._id,
+        title:theTask.title,
+        description:theTask.description,
+        created_time:formatedCreatedDate,
+        due_date:formatedDueDate,
+        status:theTask.status,
+      };
+      
       return res.status(200).json({
         statusCode: 200,
         message: "Task status has been successfully updated to 'Completed'",
-        result: theTask,
+        result: neededInfo,
       });
     } catch (err) {
       this.loggerService.error('Something broke', err.stack);
@@ -394,10 +429,23 @@ export class TaskService {
 
       this.loggerService.log('Returning task status to Pending completed');
 
+      let formatedDueDate = DateTime.fromISO(theTask.due_date).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+      let formatedCreatedDate = DateTime.fromJSDate(theTask.createdAt).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+      const neededInfo = {
+        id:theTask._id,
+        title:theTask.title,
+        description:theTask.description,
+        created_time:formatedCreatedDate,
+        due_date:formatedDueDate,
+        status:theTask.status,
+      };
+      
       return res.status(200).json({
         statusCode: 200,
         message: "Task status has been successfully updated to 'Pending'",
-        result: theTask,
+        result:neededInfo,
       });
     } catch (err) {
       this.loggerService.error('Something broke', err.stack);
@@ -432,7 +480,7 @@ export class TaskService {
       if (status !== 'Pending' && status !== 'Completed') {
         return res.status(406).json({
           statusCode: 406,
-          message: `Opps!! Your query can not be processed. status can only be either "Pending" or "Completed" `,
+          message: `Opps!! Your query can not be processed.Status can only be either "Pending" or "Completed" `,
         });
       }
 
@@ -453,13 +501,17 @@ export class TaskService {
       }
 
       for (const task of tasks) {
+        let formatedDueDate = DateTime.fromISO(task.due_date).toFormat("LLL d, yyyy 'at' HH:mm")
+      
+        let formatedCreatedDate = DateTime.fromJSDate(task.createdAt).toFormat("LLL d, yyyy 'at' HH:mm")
+
         if (status === 'Pending') {
           neededInfo = {
             id: task._id,
             title: task.title,
             description: task.description,
-            created_time: task.createdAt,
-            due_date: task.due_date,
+            created_time:formatedCreatedDate,
+            due_date:formatedDueDate,
             status: task.status,
             update_task_to_completed: `${currUrl}/task/markTaskCompleted/${task._id}`,
             delete_task: `${currUrl}/task/deleteOneTask/${task._id}`,
@@ -469,8 +521,8 @@ export class TaskService {
             id: task._id,
             title: task.title,
             description: task.description,
-            created_time: task.createdAt,
-            due_date: task.due_date,
+            created_time:formatedCreatedDate,
+            due_date:formatedDueDate,
             status: task.status,
             return_task_to_pending: `${currUrl}/task/markTaskPending/${task._id}`,
             delete_task: `${currUrl}/task/deleteOneTask/${task._id}`,
@@ -495,7 +547,7 @@ export class TaskService {
       } else if (Alltasks > 1 && totalPages >= page) {
         return res.status(200).json({
           statusCode: 200,
-          message: `Below are your  ${status} tasks`,
+          message: `Below are your ${status} tasks`,
           page: page,
           tasks_count: `${tasks.length} of ${Alltasks}`,
           result: ArrayOfTasks,

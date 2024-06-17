@@ -20,12 +20,12 @@ export class TaskController {
 
   //=================== ENDPOINT FOR CREATING A TASK =========================
   @Post('/createTask')
-  async createTask(
+  createTask(
     @Body(new ValidationPipe()) createTaskDto: CreateTaskDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
-    await this.taskService.createTask(createTaskDto, req, res);
+    this.taskService.createTask(createTaskDto, req, res);
   }
 
   //=======================ENDPOINT FOR RETREIVING ALL TASKS OF LOGGED IN USER======================
@@ -52,7 +52,7 @@ export class TaskController {
   @Post('/updateOneTask/:id')
   updateOneTask(
     @Param('id') id: string,
-    @Body() updateTaskDto: UpdateTaskDto,
+    @Body(new ValidationPipe()) updateTaskDto: UpdateTaskDto,
     @Req() req: Request,
     @Res() res: Response,
   ) {
