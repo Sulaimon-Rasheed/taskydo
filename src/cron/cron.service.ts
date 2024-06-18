@@ -14,8 +14,7 @@ export class CronService {
     private readonly loggerService: WinstonLoggerService,
   ) {}
 
-  //*/30 * * * *
-  @Cron('54 20 * * *')
+  @Cron('*/30 * * * *')
   async handleCron() {
     this.loggerService.log('Cron job running...');
     const tasks = await this.taskModel.findAll({
