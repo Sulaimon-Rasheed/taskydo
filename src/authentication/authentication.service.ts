@@ -27,7 +27,10 @@ export class AuthenticationService {
         res.locals.user = decoded;
       }
     } catch (err) {
-      throw new ForbiddenException('Jwt is required');
+      return res.status(401).json({
+        statusCode: 401,
+        message: err.message,
+      });
     }
   }
 }

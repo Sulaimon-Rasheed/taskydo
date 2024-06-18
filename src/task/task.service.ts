@@ -29,6 +29,10 @@ export class TaskService {
     try {
       await this.AuthService.ensureLogin(req, res);
 
+      if(!res.locals.user){
+        return;
+      }
+
       this.loggerService.log('Creating a task...');
 
       const task = await this.taskModel.create({
@@ -72,6 +76,10 @@ export class TaskService {
   ): Promise<Object> {
     try {
       await this.AuthService.ensureLogin(req, res);
+
+      if(!res.locals.user){
+        return;
+      }
 
       this.loggerService.log('Retrieving all tasks...');
 
@@ -223,6 +231,10 @@ export class TaskService {
   ): Promise<Object> {
     try {
       await this.AuthService.ensureLogin(req, res);
+      
+      if(!res.locals.user){
+        return;
+      }
 
       this.loggerService.log('Retrieving a task...');
 
@@ -299,6 +311,10 @@ export class TaskService {
     try {
       await this.AuthService.ensureLogin(req, res);
 
+      if(!res.locals.user){
+        return;
+      }
+
       this.loggerService.log('Updating task...');
 
       const taskId = id;
@@ -359,6 +375,10 @@ export class TaskService {
   ): Promise<Object> {
     try {
       await this.AuthService.ensureLogin(req, res);
+
+      if(!res.locals.user){
+        return;
+      }
 
       this.loggerService.log('About to mark task status as `Completed`...');
 
@@ -422,6 +442,10 @@ export class TaskService {
     try {
       await this.AuthService.ensureLogin(req, res);
 
+      if(!res.locals.user){
+        return;
+      }
+
       this.loggerService.log('Returning task status to `Pending`...');
 
       const taskId = id;
@@ -484,6 +508,10 @@ export class TaskService {
   ): Promise<Object> {
     try {
       await this.AuthService.ensureLogin(req, res);
+
+      if(!res.locals.user){
+        return;
+      }
 
       this.loggerService.log('Filtering tasks...');
 
@@ -600,6 +628,10 @@ export class TaskService {
   ): Promise<Object> {
     try {
       await this.AuthService.ensureLogin(req, res);
+
+      if(!res.locals.user){
+        return;
+      }
 
       this.loggerService.log('About to delete a task...');
 

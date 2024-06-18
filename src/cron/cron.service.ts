@@ -22,7 +22,7 @@ export class CronService {
       include: [
         {
           model: User,
-          attributes: ['_id', 'userName', 'email'],
+          attributes: ['userName', 'email'],
         },
       ],
     });
