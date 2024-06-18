@@ -27,13 +27,11 @@ export class CronService {
       ],
     });
 
-    const current_time = DateTime.now();
+    const current_time = DateTime.now()
 
     for (const task of tasks) {
-      let formatedDueDate = DateTime.fromFormat(
-        task.due_date,
-        "LLL d, yyyy 'at' HH:mm",
-      );
+      let formatedDueDate = DateTime.fromISO(task.due_date, { zone: 'utc' }).toFormat("LLL d, yyyy 'at' HH:mm")
+      
       const option = {
         email: task.user.email,
         subject: 'Reminder from Taskydo',
@@ -46,11 +44,13 @@ export class CronService {
                  <p>Have a good day</p>`,
       };
 
-      const due_time = DateTime.fromISO(task.due_date);
+      const due_time = DateTime.fromISO(task.due_date, { zone: 'utc' });
+      
+      const local_due_time = due_time.setZone(current_time.zone);
 
-      const time_diff = Math.round(due_time.diff(current_time, 'hours').hours);
+      const time_diff = Math.round(local_due_time.diff(current_time, 'hours').hours);
 
-      if (time_diff === 1) {
+      if (time_diff === 2) {
         mailService.sendEmail(option);
       }
     }

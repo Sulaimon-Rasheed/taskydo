@@ -55,6 +55,8 @@ export class TaskService {
 
       this.loggerService.log('Creating a task completed');
 
+      this.cacheService.del(`tasks-${user._id}`);
+
       return res.status(201).json({
         statusCode: 201,
         message: 'Task created successfully',
@@ -115,7 +117,7 @@ export class TaskService {
         let currUrl = 'https://taskydo-1.onrender.com/v1';
         let neededInfo;
         for (const task of tasks) {
-          let formatedDueDate = DateTime.fromISO(task.due_date).toFormat(
+          let formatedDueDate = DateTime.fromISO(task.due_date, { zone: 'utc' }).toFormat(
             "LLL d, yyyy 'at' HH:mm",
           );
 
@@ -253,7 +255,7 @@ export class TaskService {
           message: 'Task not found',
         });
       }
-      let formatedDueDate = DateTime.fromISO(task.due_date).toFormat(
+      let formatedDueDate = DateTime.fromISO(task.due_date, { zone: 'utc' }).toFormat(
         "LLL d, yyyy 'at' HH:mm",
       );
 
@@ -336,7 +338,7 @@ export class TaskService {
 
       this.loggerService.log('Successful task update');
 
-      let formatedDueDate = DateTime.fromISO(theTask.due_date).toFormat(
+      let formatedDueDate = DateTime.fromISO(theTask.due_date, { zone: 'utc' }).toFormat(
         "LLL d, yyyy 'at' HH:mm",
       );
 
@@ -402,7 +404,7 @@ export class TaskService {
 
       this.loggerService.log('Marking task status as `Completed` done');
 
-      let formatedDueDate = DateTime.fromISO(theTask.due_date).toFormat(
+      let formatedDueDate = DateTime.fromISO(theTask.due_date, { zone: 'utc' }).toFormat(
         "LLL d, yyyy 'at' HH:mm",
       );
 
@@ -468,7 +470,7 @@ export class TaskService {
 
       this.loggerService.log('Returning task status to Pending completed');
 
-      let formatedDueDate = DateTime.fromISO(theTask.due_date).toFormat(
+      let formatedDueDate = DateTime.fromISO(theTask.due_date, { zone: 'utc' }).toFormat(
         "LLL d, yyyy 'at' HH:mm",
       );
 
@@ -548,7 +550,7 @@ export class TaskService {
       }
 
       for (const task of tasks) {
-        let formatedDueDate = DateTime.fromISO(task.due_date).toFormat(
+        let formatedDueDate = DateTime.fromISO(task.due_date, { zone: 'utc' }).toFormat(
           "LLL d, yyyy 'at' HH:mm",
         );
 
