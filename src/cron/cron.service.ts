@@ -14,7 +14,8 @@ export class CronService {
     private readonly loggerService: WinstonLoggerService,
   ) {}
 
-  @Cron('*/30 * * * *')
+  //*/30 * * * *
+  @Cron('54 20 * * *')
   async handleCron() {
     this.loggerService.log('Cron job running...');
     const tasks = await this.taskModel.findAll({
@@ -27,7 +28,7 @@ export class CronService {
       ],
     });
 
-    const current_time = DateTime.now()
+    const current_time = DateTime.now().setZone("utc")
 
     for (const task of tasks) {
       let formatedDueDate = DateTime.fromISO(task.due_date, { zone: 'utc' }).toFormat("LLL d, yyyy 'at' HH:mm")
@@ -46,11 +47,12 @@ export class CronService {
 
       const due_time = DateTime.fromISO(task.due_date, { zone: 'utc' });
       
-      const local_due_time = due_time.setZone(current_time.zone);
-
-      const time_diff = Math.round(local_due_time.diff(current_time, 'hours').hours);
-
-      if (time_diff === 2) {
+      let time_diff;
+      if(due_time.year == current_time.year && due_time.month == current_time.month){
+          time_diff = Math.round((due_time.hour + (due_time.minute/60)) - ((current_time.hour + 1) + (current_time.minute/60)))
+         }
+      
+      if (time_diff === 1) {
         mailService.sendEmail(option);
       }
     }
