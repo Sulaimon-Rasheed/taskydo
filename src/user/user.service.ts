@@ -168,9 +168,10 @@ export class UserService {
         <p>This link <b>will expire in the next 10min</b></P>
         </div>`,
       });
-      return res.json({
-        message:
-          'Successful password reset request. check your email for verification link',
+      
+      return res.status(200).json({
+        statusCode:200,
+        message:'Successful password reset request. check your email for verification link',
       });
     } catch (err) {
       this.loggerService.error('Something broke', err.stack);
