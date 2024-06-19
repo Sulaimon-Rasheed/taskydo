@@ -7,6 +7,12 @@ import { AuthenticationService } from 'src/authentication/authentication.service
 import { LoginUserDto } from './dto/login-user.dto';
 import * as encrypting from '../utils/bcrypt';
 import { WinstonLoggerService } from 'src/logger/logger.service';
+import { emailVerificationDto } from './dto/emailVerification.dto';
+import { v4 as uuidv4 } from 'uuid';
+import * as mailService from '../utils/mailer';
+import { newPasswordDto } from './dto/newPassword.dto';
+import { DataType, Sequelize } from 'sequelize-typescript';
+import { DATE } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -118,6 +124,139 @@ export class UserService {
         message: err.message,
       });
     }
+  }
+
+  //================VERIFYING USER'S EMAIL FOR PASSWORD RESET.=================================
+  async verifyEmailForPasswordReset(
+    emailVerifyDto: emailVerificationDto,
+    req: Request,
+    res: Response,
+  ) {
+    try {
+      const user: User = await this.userModel.findOne({
+        where: {
+          email: emailVerifyDto.email,
+        },
+      });
+      if (!user) {
+        return res.status(404).json({
+          statusCode: 404,
+          message: 'Opps!! User not found',
+        });
+      }
+
+      const resetToken = uuidv4();
+      const hashedResetToken = await encrypting.encryptString(resetToken);
+      user.passwordResetLink = hashedResetToken;
+      user.passwordResetLinkExpiringDate = new Date(
+        Date.now() + 10 * 60 * 1000,
+      );
+      user.save();
+
+      const currUrl = 'https://taskydo-1.onrender.com/v1';
+
+      mailService.sendEmail({
+        email: user.email,
+        subject: 'We received your request for password reset',
+        html: `<div style = "background-color:lightgrey; padding:16px"; border-radius:20px>
+        <p>Hi, ${user.userName}</P>
+        <p>Click the link below to reset your paasword.</P>
+        <p><a href= ${currUrl + '/user/verifyPasswordResetLink/' + resetToken + '/' + user.email}>
+        ${currUrl + '/user/verifyPasswordResetLink/' + resetToken + '/' + user.email}
+        </a>
+        </P>
+        <p>This link <b>will expire in the next 10min</b></P>
+        </div>`,
+      });
+      return res.json({
+        message:
+          'Successful password reset request. check your email for verification link',
+      });
+    } catch (err) {
+      this.loggerService.error('Something broke', err.stack);
+      return res.status(500).json({
+        statusCode: 500,
+        message: err.message,
+      });
+    }
+  }
+
+  //=========================VERIFYING PASSWORD RESET LINK=================================
+  async verifyUserPasswordResetLink(
+    resetToken: string,
+    email: string,
+    res: Response,
+  ) {
+    try {
+      const user = await this.userModel.findOne({ where: { email: email } });
+      if (!user) {
+        return res.status(404).json({
+          statusCode: 404,
+          message: 'Opps!! User not found',
+        });
+      }
+
+      if (user.passwordResetLinkExpiringDate.getTime() < Date.now()) {
+        return res.status(410).json({
+          statusCode: 410,
+          message: 'Opps!! Reset link has expired',
+        });
+      }
+
+      const valid = await encrypting.validateEncrptedString(
+        resetToken,
+        user.passwordResetLink,
+      );
+      if (!valid) {
+        return res.status(498).json({
+          statusCode: 498,
+          message: 'Opps!! Invalid reset link',
+        });
+      }
+
+      user.passwordResetLink = "";
+      user.passwordResetLinkExpiringDate = new Date();
+      user.save();
+
+      const currUrl = 'https://taskydo-1.onrender.com/v1';
+
+      return res.status(200).json({
+        statusCode: 200,
+        message: 'Successful verification',
+        passwordResetUrl: `${currUrl}/user/newPassword/${user._id}`,
+      });
+    } catch (err) {
+      this.loggerService.error('Something broke', err.stack);
+      return res.status(500).json({
+        statusCode: 500,
+        message: err.message,
+      });
+    }
+  }
+
+  //==================SETTING A NEW PASSWORD===============================
+  async setNewPassword(
+    newPasswordDto: newPasswordDto,
+    userId: string,
+    res: Response,
+  ) {
+    const user = await this.userModel.findOne({ where: { _id: userId } });
+    if (!user) {
+      return res.status(404).json({
+        statusCode: 404,
+        message: `Opps!! User not found`,
+      });
+    }
+
+    const newPassword = newPasswordDto.newPassword;
+    const hashedPassword = await encrypting.encryptString(newPassword);
+    user.password = hashedPassword;
+    user.save();
+    return res.status(200).json({
+      statusCode: 200,
+      message:
+        'Successful password reset. You can now login with your new password.',
+    });
   }
 
   //======================= SERVICE FOR LOGGING OUT USER ======================

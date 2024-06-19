@@ -1,6 +1,8 @@
 import {
+  AllowNull,
   AutoIncrement,
   Column,
+  DataType,
   HasMany,
   Model,
   PrimaryKey,
@@ -28,4 +30,16 @@ export class User extends Model<User> {
 
   @Column
   taskIds: string;
+
+  @Column({
+    type:DataType.STRING,
+    allowNull:true
+  })
+  passwordResetLink: string;
+
+  @Column({
+    type:DataType.DATE,
+    allowNull:true
+  })
+  passwordResetLinkExpiringDate: Date;
 }
