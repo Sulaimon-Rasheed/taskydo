@@ -1,15 +1,26 @@
-import { IsNotEmpty, IsString, MinLength, min } from 'class-validator';
+import {IsNotEmpty, IsString, Matches, MinLength} from 'class-validator';
+import {IsEmail} from "./custom-class-validator"
 
 export class CreateUserDto {
   @IsString()
   @IsNotEmpty({
     message: 'userName is required',
   })
+  @Matches(/^\S+$/, {
+    message: 'userName must not contain any whitespace',
+  })
+
+  @Matches(/^[a-zA-Z0-9]+$/, {
+    message: 'userName must contain only alphanumeric characters',
+  })
   userName: string;
 
   @IsString()
   @IsNotEmpty({
     message: 'email is required',
+  })
+  @IsEmail({
+    message:"email must be a valid email"
   })
   email: string;
 

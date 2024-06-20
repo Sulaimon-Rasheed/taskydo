@@ -1,7 +1,10 @@
-import { IsEmail, IsNotEmpty} from "class-validator";
+import {IsNotEmpty} from "class-validator";
+import {IsEmail} from "./custom-class-validator"
 
 export class emailVerificationDto {
-    @IsEmail()
     @IsNotEmpty()
+    @IsEmail({
+        message:"email must be a valid email"
+      })
     email:string   
 }
