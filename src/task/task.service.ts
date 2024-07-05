@@ -114,7 +114,7 @@ export class TaskService {
         }
 
         let ArrayOfTasks = [];
-        let currUrl = 'https://taskydo-1.onrender.com/v1';
+        let currUrl = 'https://taskydo.onrender.com/v1';
         let neededInfo;
         for (const task of tasks) {
           let formatedDueDate = DateTime.fromISO(task.due_date, { zone: 'utc' }).toFormat(
@@ -243,7 +243,7 @@ export class TaskService {
       const userId = res.locals.user.id;
       const taskId = id;
       let neededInfo;
-      let currUrl = 'https://taskydo-1.onrender.com/v1';
+      let currUrl = 'https://taskydo.onrender.com/v1';
 
       const task = await this.taskModel.findOne({
         where: { _id: taskId, user_id: userId },
@@ -522,7 +522,7 @@ export class TaskService {
       let offset = (page - 1) * limit;
 
       let ArrayOfTasks = [];
-      let currUrl = 'https://taskydo-1.onrender.com/v1';
+      let currUrl = 'https://taskydo.onrender.com/v1';
       let neededInfo;
       let totalPages;
 

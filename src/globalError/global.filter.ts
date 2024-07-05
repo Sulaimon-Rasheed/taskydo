@@ -1,4 +1,3 @@
-// global-exception.filter.ts
 import {
   ExceptionFilter,
   Catch,
@@ -12,6 +11,7 @@ import { Request, Response } from 'express';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
+  //catch method
   catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
@@ -22,38 +22,38 @@ export class GlobalExceptionFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-        if (exception instanceof BadRequestException) {
-          const responseBody = exception.getResponse() as {
-            message: any;
-            statusCode: number;
-            error: string;
-          };
-    
-          if (
-            Array.isArray(responseBody.message) &&
-            responseBody.message.every((msg) => this.isValidationError(msg))
-          ) {
-            const validationErrors = this.flattenValidationErrors(
-              responseBody.message as ValidationError[]
-            );
-            return response.status(status).json({
-              statusCode: status,
-              message: validationErrors,
-            });
-          }
-        
-        }
+    if (exception instanceof BadRequestException) {
+      const responseBody = exception.getResponse() as {
+        message: any;
+        statusCode: number;
+        error: string;
+      };
+
+      if (Array.isArray(responseBody.message) &&
+        responseBody.message.every((msg) => this.isValidationError(msg))
+      ) {
+        const validationErrors = this.flattenValidationErrors(
+          responseBody.message as ValidationError[],
+        );
+        return response.status(status).json({
+          statusCode: status,
+          message: validationErrors,
+        });
+      }
+    }
     response.status(status).json({
       statusCode: status,
       message: exception.message || 'Something broke. Try later',
     });
   }
 
+  //isValidationError method
   private isValidationError(obj: any): obj is ValidationError {
     return obj && typeof obj === 'object' && 'constraints' in obj;
   }
 
-  private flattenValidationErrors(validationErrors: ValidationError[]): string[] {
+  //flattenValidationErrors method
+  private flattenValidationErrors(validationErrors: ValidationError[],): string[] {
     const messages: string[] = [];
     for (const error of validationErrors) {
       if (error.constraints) {
@@ -65,4 +65,5 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     }
     return messages;
   }
+
 }

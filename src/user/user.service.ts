@@ -153,7 +153,7 @@ export class UserService {
       );
       user.save();
 
-      const currUrl = 'https://taskydo-1.onrender.com/v1';
+      const currUrl = 'https://taskydo.onrender.com/v1';
 
       mailService.sendEmail({
         email: user.email,
@@ -219,7 +219,7 @@ export class UserService {
       user.passwordResetLinkExpiringDate = new Date();
       user.save();
 
-      const currUrl = 'https://taskydo-1.onrender.com/v1';
+      const currUrl = 'https://taskydo.onrender.com/v1';
 
       return res.status(200).json({
         statusCode: 200,
